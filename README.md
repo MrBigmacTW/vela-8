@@ -1,8 +1,19 @@
-# VELA-8 · Monophonic Analogue Synthesizer
+# 前端 UI 展示
 
-一台**虛構**手工類比合成器的互動產品頁。面板上的旋鈕可拖曳、八步定序器可點亮、示波器即時繪製波形，按下 **PLAY** 會透過 Web Audio API 真的發出聲音。
+兩個純靜態、無建置流程的互動頁面，用來展示不像 AI 生成的前端設計。
 
-純靜態單檔（`index.html`），無建置流程、無相依套件。
+| 路徑 | 頁面 |
+|---|---|
+| `/` | **VELA-8** — 虛構手工類比合成器的互動產品頁 |
+| `/white-knight` | **白騎士症候群** — 可互動的心理側寫 |
+
+## VELA-8 · Monophonic Analogue Synthesizer
+
+面板上的旋鈕可拖曳、八步定序器可點亮並自選音高、示波器即時繪製波形，按下 **PLAY** 會透過 Web Audio API 真的發出聲音。純靜態單檔（`index.html`）。
+
+## 白騎士症候群 · Interactive Essay
+
+暖黑手抄本風格的心理側寫（`white-knight/index.html`）。包含一段四幕分支故事測驗（選擇後揭露真相）、可互動的「拯救的循環」軌道（走一圈累加關係次數），以及照顧 vs 拯救的對照互動。
 
 ## 本機預覽
 

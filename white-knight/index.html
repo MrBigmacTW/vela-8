@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>白騎士症候群 · 夜巡</title>
+<meta name="description" content="白騎士症候群：以拯救伴侶來確認自我價值的關係模式。拉開盔甲、走一圈拯救的循環——一份可互動的心理側寫。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,320..460&family=Noto+Serif+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* =============================== tokens =============================== */
+:root{
+  --bg:#16130D; --bg-2:#1E1A11; --bg-3:#241F14;
+  --text:#E9E0CC; --text-2:#B4AA8E; --faint:#867A55;
+  --seam:#342D1D; --seam-2:#2A2417;
+  --oxblood:#A64031; --oxblood-deep:#7E2A21;
+  --gilt:#B48D4A; --gilt-hi:#D3B274;
+  --steel:#3C4C48; --steel-2:#26332F; --steel-hi:#586A64;
+
+  --cjk:"Noto Serif TC",serif;
+  --serif:"Newsreader","Noto Serif TC",Georgia,serif;
+  --display:"Fraunces","Noto Serif TC",Georgia,serif;
+
+  --maxw:1180px;
+  --edge:clamp(1.15rem,4.5vw,4.5rem);
+  --gutter:clamp(1.4rem,4vw,3.6rem);
+  --margin-col:clamp(120px,20vw,224px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--serif);font-optical-sizing:auto;font-weight:380;
+  font-size:clamp(1.02rem,.5vw + .92rem,1.14rem);line-height:1.75;letter-spacing:.006em;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(120% 80% at 50% -8%, rgba(180,141,74,.10), transparent 55%),
+    radial-gradient(120% 120% at 50% 120%, rgba(0,0,0,.55), transparent 60%);}
+body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+img,svg,canvas{display:block;max-width:100%}
+::selection{background:var(--oxblood);color:#F3ECDD}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:1.5px solid var(--gilt);outline-offset:4px}
+
+.label-cjk{font-family:var(--cjk);font-weight:400;font-size:.78rem;letter-spacing:.42em;color:var(--faint)}
+
+/* =============================== masthead =============================== */
+.masthead{position:sticky;top:0;z-index:40;
+  background:linear-gradient(180deg,rgba(22,19,13,.94),rgba(22,19,13,.72));
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid var(--seam);}
+.masthead-in{max-width:var(--maxw);margin-inline:auto;padding:.9rem var(--edge);display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.masthead .sig{font-family:var(--cjk);font-weight:500;font-size:.82rem;letter-spacing:.34em;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.masthead .sig .b{color:var(--gilt)}
+.masthead nav{display:flex;gap:1.5rem}
+.masthead nav a{font-family:var(--cjk);font-size:.8rem;letter-spacing:.22em;color:var(--faint);transition:color .25s}
+.masthead nav a:hover{color:var(--text)}
+@media(max-width:720px){.masthead nav{display:none}}
+
+/* =============================== leaf grid =============================== */
+.leaf{max-width:var(--maxw);margin-inline:auto;padding-inline:var(--edge);padding-block:clamp(3.4rem,8vw,7rem);
+  display:grid;grid-template-columns:var(--margin-col) minmax(0,1fr);column-gap:var(--gutter);}
+.aside{text-align:right;border-right:1px solid var(--seam);padding-right:var(--gutter);align-self:stretch;position:relative}
+.aside .folio{font-family:var(--display);font-weight:400;font-size:1.05rem;color:var(--gilt)}
+.aside .mark{margin-top:.55rem;font-family:var(--cjk);font-size:.8rem;letter-spacing:.4em;color:var(--faint);writing-mode:vertical-rl;display:inline-block;margin-left:auto}
+.aside .gloss{margin-top:1.7rem;font-style:italic;font-size:.86rem;line-height:1.5;color:var(--text-2);max-width:20ch;margin-left:auto}
+.aside .gloss::before{content:"❦";display:block;color:var(--gilt);font-style:normal;font-size:.9rem;margin-bottom:.5rem;opacity:.8}
+.body{min-width:0}
+.body > *:first-child{margin-top:0}
+@media(max-width:820px){
+  .leaf{grid-template-columns:1fr;row-gap:1.4rem}
+  .aside{text-align:left;border-right:0;border-bottom:1px solid var(--seam);padding-right:0;padding-bottom:1rem;display:flex;align-items:baseline;gap:1.2rem;flex-wrap:wrap}
+  .aside .mark{writing-mode:horizontal-tb;margin-top:0}
+  .aside .gloss{margin-top:0;max-width:none;margin-left:0;flex-basis:100%}
+  .aside .gloss::before{display:inline;margin-right:.5rem}
+}
+h1,h2,h3{margin:0;font-weight:500;line-height:1.05}
+.h2-cn{font-family:var(--cjk);font-weight:500;font-size:clamp(1.9rem,4.6vw,3.4rem);line-height:1.22;letter-spacing:.02em;color:var(--text)}
+.body .lede{font-family:var(--serif);font-weight:360;font-size:clamp(1.16rem,1.4vw + .8rem,1.5rem);line-height:1.5;color:var(--text);margin:1.4rem 0 0;max-width:34ch}
+
+/* =============================== hero =============================== */
+.hero{position:relative;z-index:1;max-width:var(--maxw);margin-inline:auto;padding-inline:var(--edge);
+  padding-block:clamp(3rem,7vw,5.5rem) clamp(2rem,4vw,3rem)}
+.hero .ey{font-family:var(--cjk);font-size:.82rem;letter-spacing:.4em;color:var(--faint);margin-bottom:1.3rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:baseline}
+.hero .ey .en{font-family:var(--display);font-style:italic;letter-spacing:.02em;color:var(--gilt);font-size:1rem}
+.hero h1{font-family:var(--cjk);font-weight:700;font-size:clamp(3rem,11vw,8rem);line-height:.96;letter-spacing:.02em;color:var(--text);text-shadow:0 1px 0 rgba(0,0,0,.4)}
+.hero .thesis{margin-top:1.5rem;font-family:var(--cjk);font-weight:400;font-size:clamp(1.35rem,3vw + .5rem,2.4rem);line-height:1.4;letter-spacing:.03em;color:var(--text)}
+.hero .thesis .ox{color:var(--oxblood)}
+.hero .stand{margin-top:1.5rem;max-width:46ch;color:var(--text-2);font-size:1.06rem;line-height:1.7}
+
+/* ---- interactive story ---- */
+.cl{white-space:nowrap}
+.storywrap{margin-top:clamp(2.2rem,5vw,3.4rem)}
+.storyfoot{margin-top:1.1rem;font-family:var(--display);font-style:italic;font-size:.92rem;color:var(--faint)}
+.storyhead{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:.9rem;flex-wrap:wrap}
+.storyhead .t{font-family:var(--cjk);letter-spacing:.3em;font-size:.78rem;color:var(--faint)}
+.storyhead .prog{font-family:var(--display);font-style:italic;color:var(--gilt);font-size:.9rem;letter-spacing:.04em}
+.storycard{position:relative;border:1px solid var(--seam);border-top:2px solid var(--gilt);border-radius:3px;
+  background:linear-gradient(180deg,var(--bg-2),var(--bg));padding:clamp(1.6rem,3.6vw,2.8rem);
+  box-shadow:0 22px 44px rgba(0,0,0,.32);transition:opacity .25s ease;min-height:clamp(230px,34vw,300px)}
+.storycard::before{content:"";position:absolute;inset:7px;border:1px solid var(--seam-2);pointer-events:none;border-radius:2px}
+.storycard.fade{opacity:0}
+.scene{position:relative;font-family:var(--cjk);font-weight:400;font-size:clamp(1.2rem,2.4vw,1.7rem);line-height:1.62;color:var(--text);margin:0 0 1.7rem;max-width:44ch;letter-spacing:.02em}
+.scene q{font-style:normal;color:var(--gilt-hi);quotes:"「" "」"}
+.choices{display:grid;gap:.7rem;max-width:52ch}
+.choice{appearance:none;text-align:left;cursor:pointer;font-family:var(--cjk);font-size:1.02rem;line-height:1.5;color:var(--text-2);
+  border:1px solid var(--seam);background:rgba(255,255,255,.014);padding:.9rem 1.1rem;border-radius:4px;
+  display:flex;gap:.85rem;align-items:baseline;transition:border-color .2s,color .2s,background .2s}
+.choice .m{font-family:var(--cjk);color:var(--gilt);flex:0 0 auto;font-size:.9rem}
+.choice:hover,.choice:focus-visible{border-color:var(--gilt);color:var(--text);background:rgba(180,141,74,.06)}
+.reveal-r .k{font-family:var(--cjk);letter-spacing:.3em;font-size:.72rem;color:var(--oxblood);margin-bottom:1rem}
+.reveal-r h3{font-family:var(--cjk);font-weight:500;font-size:clamp(1.45rem,3.2vw,2.1rem);line-height:1.4;color:#F4ECDC;margin:0 0 1.1rem;text-shadow:0 0 22px rgba(166,64,49,.32)}
+.reveal-r p{margin:0;color:var(--text-2);line-height:1.72;max-width:46ch;font-size:1.04rem}
+.reveal-r .cnt{margin-top:1.2rem;font-family:var(--display);font-style:italic;color:var(--faint);font-size:.9rem}
+.reveal-r .again{margin-top:1.6rem}
+
+/* =============================== I. portrait =============================== */
+.prose{margin-top:clamp(2rem,4vw,3rem);max-width:60ch}
+.prose p{margin:0 0 1.15rem}
+.prose p:last-child{margin-bottom:0}
+.prose strong{font-weight:500;color:var(--text)}
+.prose em{color:var(--gilt-hi);font-style:italic}
+.dropcap::first-letter{font-family:var(--cjk);font-weight:700;float:left;font-size:3.35em;line-height:.72;padding:.06em .12em 0 0;color:var(--gilt)}
+.blazon{margin-top:clamp(2.4rem,5vw,3.6rem);border-top:1px solid var(--seam);padding-top:1.6rem}
+.blazon .cap{font-family:var(--cjk);letter-spacing:.4em;font-size:.78rem;color:var(--faint);margin-bottom:1.4rem}
+.blazon .item{display:grid;grid-template-columns:minmax(0,15rem) 1fr;gap:.4rem 1.6rem;padding:1.05rem 0;border-bottom:1px solid var(--seam-2);align-items:baseline}
+.blazon .item:last-child{border-bottom:0}
+.blazon dt{font-family:var(--cjk);font-weight:500;font-size:1.12rem;color:var(--text);display:flex;align-items:baseline;gap:.7rem}
+.blazon dt .arg{font-family:var(--display);font-style:italic;font-weight:400;font-size:.78rem;letter-spacing:.06em;color:var(--gilt);text-transform:lowercase}
+.blazon dd{margin:0;color:var(--text-2);font-size:.99rem;line-height:1.55}
+@media(max-width:600px){.blazon .item{grid-template-columns:1fr;gap:.35rem}}
+
+/* =============================== II. beneath =============================== */
+.beneath{background:linear-gradient(180deg,var(--bg),var(--bg-2) 22%,var(--bg-2) 78%,var(--bg));position:relative;z-index:1}
+.roots{margin-top:clamp(2rem,4vw,3rem);max-width:64ch}
+.root{display:grid;grid-template-columns:auto 1fr;gap:clamp(1.2rem,3vw,2.2rem);padding:clamp(1.5rem,3vw,2.1rem) 0;border-top:1px solid var(--seam);align-items:baseline}
+.root:first-child{border-top:0}
+.root .rn{font-family:var(--display);font-weight:400;font-size:clamp(1.5rem,3vw,2.1rem);color:var(--gilt);line-height:1;min-width:2.4rem}
+.root h3{font-family:var(--cjk);font-weight:500;font-size:clamp(1.2rem,2vw,1.5rem);color:var(--text);margin-bottom:.5rem;letter-spacing:.02em}
+.root h3 .en{display:block;margin-top:.35rem;font-family:var(--display);font-style:italic;font-weight:400;font-size:.82rem;letter-spacing:.05em;color:var(--faint)}
+.root p{margin:0;color:var(--text-2);line-height:1.62;max-width:52ch}
+.beneath .pull{margin:clamp(2.6rem,5vw,4rem) 0 0;padding-left:1.5rem;border-left:2px solid var(--oxblood);font-family:var(--cjk);font-weight:400;font-size:clamp(1.35rem,2.6vw,2.05rem);line-height:1.45;letter-spacing:.04em;color:var(--text);max-width:24ch}
+
+/* =============================== III. loop (interactive) =============================== */
+.loopstage{margin-top:clamp(1.5rem,3vw,2.4rem);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:clamp(1.5rem,4vw,3rem);align-items:center}
+@media(max-width:780px){.loopstage{grid-template-columns:1fr;gap:2rem}}
+.ring{position:relative;width:min(80vw,400px);aspect-ratio:1;margin-inline:auto;container-type:size}
+.ring .disc{position:absolute;inset:8%;border-radius:50%;border:1px solid var(--seam);
+  background:radial-gradient(circle,var(--bg-2),var(--bg) 72%);box-shadow:inset 0 0 40px rgba(0,0,0,.6)}
+.ring .track{position:absolute;inset:8%;border-radius:50%;border:1px dashed var(--seam-2)}
+.node{position:absolute;top:50%;left:50%;width:auto;transform:translate(-50%,-50%) rotate(var(--a,0deg)) translateY(-40cqmin) rotate(calc(-1*var(--a,0deg)));text-align:center;transition:color .3s}
+.node .dot{width:13px;height:13px;border-radius:50%;margin:0 auto .4rem;background:var(--seam);box-shadow:inset 0 0 3px #000;transition:all .3s}
+.node .nl{font-family:var(--cjk);font-size:.8rem;letter-spacing:.14em;color:var(--faint);white-space:nowrap;transition:color .3s}
+.node .nn{font-family:var(--display);font-style:italic;font-size:.66rem;color:var(--seam-2)}
+.node.on .dot{background:var(--oxblood);box-shadow:0 0 12px var(--oxblood),0 0 3px #fff inset;transform:scale(1.15)}
+.node.on .nl{color:var(--text)}
+.arm{position:absolute;inset:0;transform:rotate(var(--arm,0deg));transition:transform .55s cubic-bezier(.45,.05,.2,1);pointer-events:none}
+.arm .token{position:absolute;top:50%;left:50%;width:18px;height:18px;border-radius:50%;
+  transform:translate(-50%,-50%) translateY(-40cqmin);
+  background:radial-gradient(circle at 40% 35%,var(--gilt-hi),var(--gilt));box-shadow:0 0 16px var(--gilt-hi),0 0 4px #fff inset}
+.loopread{align-self:center}
+.loopread .count{font-family:var(--display);font-style:italic;color:var(--oxblood);font-size:.95rem;letter-spacing:.02em;margin-bottom:1rem}
+.loopread .count b{font-style:normal;font-weight:600;font-size:1.25em}
+.loopread .stg-n{font-family:var(--display);font-weight:500;font-size:clamp(2.2rem,5vw,3.4rem);color:var(--gilt);line-height:1}
+.loopread h3{font-family:var(--cjk);font-weight:500;font-size:clamp(1.4rem,3vw,1.9rem);color:var(--text);margin:.5rem 0 .1rem;letter-spacing:.03em}
+.loopread h3 .en{font-family:var(--display);font-style:italic;font-weight:400;font-size:.5em;letter-spacing:.05em;color:var(--faint);margin-left:.6rem}
+.loopread p{margin:.7rem 0 0;color:var(--text-2);line-height:1.6;max-width:40ch;min-height:3.2em}
+.loopctl{margin-top:1.6rem;display:flex;gap:.7rem;flex-wrap:wrap}
+.lbtn{appearance:none;cursor:pointer;font-family:var(--cjk);font-size:.86rem;letter-spacing:.12em;color:var(--text);
+  border:1px solid var(--seam);background:linear-gradient(180deg,var(--bg-3),var(--bg-2));padding:.6rem 1.1rem;border-radius:5px;
+  display:inline-flex;align-items:center;gap:.5rem;transition:border-color .2s,color .2s}
+.lbtn:hover{border-color:var(--gilt);color:var(--gilt-hi)}
+.lbtn.primary{background:linear-gradient(180deg,#3a1712,#2a0f0b);border-color:var(--oxblood-deep);color:#F1D9D2}
+.lbtn.primary:hover{border-color:var(--oxblood);color:#fff}
+.lbtn.on{border-color:var(--gilt);color:var(--gilt-hi)}
+
+/* =============================== IV. ledger =============================== */
+.ledger{margin-top:clamp(2rem,4vw,3rem);display:grid;grid-template-columns:1fr 1fr}
+.ledger .col.rescue{border-left:1px solid var(--seam)}
+.ledger .colhead{padding:0 0 1rem;margin:0 clamp(.9rem,2.5vw,1.8rem);border-bottom:1px solid var(--seam)}
+.ledger .colhead .k{display:block;font-family:var(--display);font-style:italic;font-size:.8rem;letter-spacing:.05em;color:var(--faint);margin-bottom:.5rem}
+.ledger .colhead h3{font-family:var(--cjk);font-weight:500;font-size:clamp(1.25rem,2.6vw,1.9rem);letter-spacing:.03em}
+.ledger .care .colhead h3{color:var(--text)}
+.ledger .rescue .colhead h3{color:var(--oxblood)}
+.ledger .r{padding:1.05rem clamp(.9rem,2.5vw,1.8rem);border-bottom:1px solid var(--seam-2);line-height:1.5;min-height:5.4rem;display:flex;align-items:center;gap:.7rem;transition:background .2s}
+.ledger .r:last-child{border-bottom:0}
+.ledger .care .r{color:var(--text-2)}
+.ledger .rescue .r{color:var(--text)}
+.ledger .mk{flex:0 0 auto;font-family:var(--display);font-size:1rem}
+.ledger .care .mk{color:var(--gilt)}
+.ledger .rescue .mk{color:var(--oxblood)}
+.ledger .r.hi{background:rgba(180,141,74,.07)}
+.ledger .rescue .r.hi{background:rgba(166,64,49,.09)}
+@media(max-width:680px){
+  .ledger{grid-template-columns:1fr}
+  .ledger .col.rescue{border-left:0;border-top:1px solid var(--seam);margin-top:.5rem}
+  .ledger .r{min-height:0}
+}
+
+/* =============================== V. coda =============================== */
+.coda{margin-top:clamp(2rem,4vw,3rem);max-width:60ch}
+.coda .row{display:grid;grid-template-columns:auto 1fr;gap:1.4rem;padding:1.15rem 0;border-top:1px solid var(--seam);align-items:baseline}
+.coda .row:first-child{border-top:0}
+.coda .row .g{font-family:var(--display);font-style:italic;color:var(--gilt);font-size:1rem;min-width:2.2rem}
+.coda .row h3{font-family:var(--cjk);font-weight:500;font-size:1.14rem;color:var(--text);margin-bottom:.3rem;display:inline}
+.coda .row p{margin:.35rem 0 0;color:var(--text-2);line-height:1.6}
+.closing{margin-top:clamp(3rem,6vw,5rem);padding-top:clamp(2.4rem,5vw,3.4rem);border-top:1px solid var(--seam);display:grid;grid-template-columns:auto 1fr;gap:clamp(1.2rem,4vw,2.6rem);align-items:center}
+.closing .q{font-family:var(--display);font-style:italic;font-size:clamp(3rem,9vw,5rem);color:var(--gilt);line-height:.7}
+.closing p{margin:0;font-family:var(--cjk);font-weight:400;font-size:clamp(1.35rem,2.8vw,2.15rem);line-height:1.5;letter-spacing:.03em;color:var(--text);max-width:26ch}
+@media(max-width:600px){.closing{grid-template-columns:1fr}}
+
+/* =============================== colophon =============================== */
+.colophon{border-top:1px solid var(--seam);max-width:var(--maxw);margin-inline:auto;padding-inline:var(--edge);padding-block:clamp(2.6rem,5vw,4rem);
+  display:grid;grid-template-columns:var(--margin-col) minmax(0,1fr);column-gap:var(--gutter)}
+.colophon .aside{border-right:1px solid var(--seam)}
+.colophon .note{max-width:56ch;color:var(--text-2);font-size:.94rem;line-height:1.68}
+.colophon .note b{color:var(--gilt);font-weight:400;font-family:var(--cjk)}
+.colophon .imprint{margin-top:1.6rem;font-family:var(--serif);font-style:italic;font-size:.82rem;color:var(--faint);display:flex;gap:1.4rem;flex-wrap:wrap}
+@media(max-width:820px){
+  .colophon{grid-template-columns:1fr;row-gap:1.2rem}
+  .colophon .aside{border-right:0;border-bottom:1px solid var(--seam);text-align:left;padding-right:0;padding-bottom:1rem}
+}
+
+.rv{opacity:0;transform:translateY(10px);transition:opacity .9s ease,transform .9s cubic-bezier(.2,.6,.2,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.arm{transition:none}.plate.anim{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-in">
+    <span class="sig"><span class="b">卷</span>　白騎士症候群</span>
+    <nav aria-label="章節">
+      <a href="#portrait">側寫</a><a href="#beneath">機制</a><a href="#loop">循環</a><a href="#ledger">辨別</a><a href="#coda">卸甲</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================ HERO ============================ -->
+  <section class="hero">
+    <div class="ey">非正式診斷　關係模式<span class="en">White Knight Syndrome</span></div>
+    <h1>白騎士症候群</h1>
+    <p class="thesis"><span class="cl">以<span class="ox">拯救</span>之名，</span><span class="cl">藏起自己的傷。</span></p>
+    <p class="stand">他總被「需要被拯救」的人吸引，用解決對方的難題來確認自己值得被愛。這不是壞人——這是一副從不敢卸下的盔甲。</p>
+
+    <div class="storywrap">
+      <div class="storyhead">
+        <span class="t">先做一個選擇 · 一場關於拯救的測驗</span>
+        <span class="prog" id="storyProg">幕 一 / 四</span>
+      </div>
+      <div class="storycard" id="storyCard"><!-- injected by JS --></div>
+      <p class="storyfoot">四個選擇，沒有對錯——只有一面鏡子。</p>
+    </div>
+  </section>
+
+  <!-- ============================ I. PORTRAIT ============================ -->
+  <section class="leaf rv" id="portrait">
+    <div class="aside"><div class="folio">I</div><div class="mark">側寫</div>
+      <p class="gloss">樂於助人是美德；問題在於那份拯救是否「非做不可」。</p></div>
+    <div class="body">
+      <h2 class="h2-cn">他不是壞人，<br>只是把愛，活成了任務。</h2>
+      <div class="prose">
+        <p class="dropcap">白騎士症候群並非精神醫學的正式診斷，而是一種<strong>關係模式</strong>：一個人習慣性地被「陷入困境、需要被拯救」的伴侶吸引，透過解決對方的問題、承擔對方的人生，來確認自己的價值與被愛的資格。</p>
+        <p>問題不在樂於助人——那是美德。問題在於，這份拯救是<em>強迫性的</em>：不救，他就覺得自己一無是處。於是他挑的往往不是能與他並肩的人，而是永遠差一步就會墜落的人。</p>
+        <p>盔甲擦得越亮，越沒有人看得見底下那個，同樣渴望被接住的自己。</p>
+      </div>
+      <div class="blazon">
+        <div class="cap">紋章載記 · Blazon</div>
+        <dl>
+          <div class="item"><dt>一顆待命的心<span class="arg">gules</span></dt><dd>手機從不靜音，隨時為對方的危機出動。</dd></div>
+          <div class="item"><dt>一副不卸的盔甲<span class="arg">argent</span></dt><dd>能接住別人所有的脆弱，卻從不讓人看見自己的。</dd></div>
+          <div class="item"><dt>一本單向的帳冊<span class="arg">or</span></dt><dd>記得對方每個需求，自己那一頁卻始終空白。</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ II. BENEATH ============================ -->
+  <section class="leaf beneath rv" id="beneath">
+    <div class="aside"><div class="folio">II</div><div class="mark">機制</div>
+      <p class="gloss">看似向外，根卻向內——長在一處很早以前就沒被照顧到的傷上。</p></div>
+    <div class="body">
+      <h2 class="h2-cn">拯救別人，<br>是為了不必面對自己。</h2>
+      <p class="lede">白騎士的行為都是為了你。但它的根，幾乎總是向內。</p>
+      <div class="roots">
+        <div class="root"><div class="rn">i</div><div><h3>太早懂事的孩子<span class="en">the parentified child</span></h3><p>在該被照顧的年紀成了照顧者。於是學會：我的存在感，來自別人有多需要我。</p></div></div>
+        <div class="root"><div class="rn">ii</div><div><h3>綁在「被需要」上的自尊<span class="en">conditional worth</span></h3><p>價值不是「我本來就好」，而是「我有沒有用」。一停止付出，焦慮與空虛便湧上來。</p></div></div>
+        <div class="root"><div class="rn">iii</div><div><h3>對脆弱的迴避<span class="en">fear of vulnerability</span></h3><p>照顧別人，比被人照顧安全得多。站在拯救者的位置，就永遠不必承認自己也會痛。</p></div></div>
+      </div>
+      <p class="pull"><span class="cl">控制與拯救，</span><br><span class="cl">是恐懼穿上的盔甲。</span></p>
+    </div>
+  </section>
+
+  <!-- ============================ III. LOOP (interactive) ============================ -->
+  <section class="leaf rv" id="loop">
+    <div class="aside"><div class="folio">III</div><div class="mark">循環</div>
+      <p class="gloss">每段關係彷彿全新，卻走著同一條軌跡。</p></div>
+    <div class="body">
+      <h2 class="h2-cn">一個會自己<br>轉起來的圈。</h2>
+      <p class="lede">按「下一步」，跟著走一圈——看它如何回到原點。</p>
+
+      <div class="loopstage">
+        <div class="ring" id="ring">
+          <div class="disc"></div>
+          <div class="track"></div>
+          <!-- nodes injected by JS -->
+          <div class="arm" id="arm"><div class="token"></div></div>
+        </div>
+        <div class="loopread">
+          <div class="count">第 <b id="relN">1</b> 段關係 · 已重複 <b id="loopN">0</b> 圈</div>
+          <div class="stg-n" id="stgN">01</div>
+          <h3 id="stgTitle">理想化<span class="en" id="stgEn">idealize</span></h3>
+          <p id="stgDesc">你愛上的不完全是這個人，而是「一個等待被你修好的人」。他的破碎，正好對上你想被需要的渴望。</p>
+          <div class="loopctl">
+            <button class="lbtn primary" id="loopNext">下一步 ▸</button>
+            <button class="lbtn" id="loopAuto">自動播放</button>
+            <button class="lbtn" id="loopReset">重來</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ IV. LEDGER ============================ -->
+  <section class="leaf rv" id="ledger">
+    <div class="aside"><div class="folio">IV</div><div class="mark">辨別</div>
+      <p class="gloss">健康的照顧讓兩人都更自由；拯救讓兩人都離不開。</p></div>
+    <div class="body">
+      <h2 class="h2-cn">同樣是付出，<br>方向卻剛好相反。</h2>
+      <p class="lede">把游標移到任一列，看看它的另一面。</p>
+      <div class="ledger" id="ledger">
+        <div class="col care">
+          <div class="colhead"><span class="k">recto</span><h3>健康的照顧</h3></div>
+          <div class="r" data-p="0"><span class="mk">✦</span>相信對方有能力面對自己的人生</div>
+          <div class="r" data-p="1"><span class="mk">✦</span>有界限，也允許自己說「不」</div>
+          <div class="r" data-p="2"><span class="mk">✦</span>付出之後，仍記得照顧自己</div>
+          <div class="r" data-p="3"><span class="mk">✦</span>樂見對方成長、變得獨立</div>
+          <div class="r" data-p="4"><span class="mk">✦</span>愛，是一種自由的選擇</div>
+        </div>
+        <div class="col rescue">
+          <div class="colhead"><span class="k">verso</span><h3>白騎士的拯救</h3></div>
+          <div class="r" data-p="0"><span class="mk">✕</span>相信對方離了你就會垮掉</div>
+          <div class="r" data-p="1"><span class="mk">✕</span>界限模糊，幾乎無法拒絕</div>
+          <div class="r" data-p="2"><span class="mk">✕</span>付出到把自己整個掏空</div>
+          <div class="r" data-p="3"><span class="mk">✕</span>需要對方，一直需要你</div>
+          <div class="r" data-p="4"><span class="mk">✕</span>愛，是一項必須完成的任務</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ V. CODA ============================ -->
+  <section class="leaf rv" id="coda">
+    <div class="aside"><div class="folio">V</div><div class="mark">卸甲</div>
+      <p class="gloss">不是停止去愛，是學會不必先立功，才配被愛。</p></div>
+    <div class="body">
+      <h2 class="h2-cn">卸下盔甲，<br>不代表放下劍。</h2>
+      <div class="coda">
+        <div class="row"><div class="g">i</div><div><h3>先問自己一個問題。</h3><p>「我是在愛他，還是在完成一個任務？」能誠實停下來問，模式就開始鬆動。</p></div></div>
+        <div class="row"><div class="g">ii</div><div><h3>把注意力轉回自己。</h3><p>你的疲憊、你的渴望、你的傷，同樣值得被接住。照顧自己不是自私，是止血。</p></div></div>
+        <div class="row"><div class="g">iii</div><div><h3>學會接受，而不只是給予。</h3><p>讓別人為你做一點小事，並且不急著回報。被照顧的能力，也需要練習。</p></div></div>
+        <div class="row"><div class="g">iv</div><div><h3>把人生還給對方。</h3><p>允許對方為自己的選擇負責。你可以在旁支持，但不必替他把整條路都走完。</p></div></div>
+      </div>
+      <div class="closing"><div class="q" aria-hidden="true">&ldquo;</div><p><span class="cl">真正的勇敢，</span><span class="cl">有時不是再救一個人，</span><br><span class="cl">而是讓別人，</span><span class="cl">也有機會走近你。</span></p></div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <div class="aside"><div class="folio">跋</div><div class="mark">奧援</div></div>
+  <div>
+    <p class="note"><b>若這些描述觸動了你</b>，那份感受值得被認真對待。本篇無法取代專業評估——請考慮尋求心理師或諮商協助。求助，從來不是弱者的行為，而是騎士終於願意，讓別人也走近他。</p>
+    <div class="imprint"><span>Servo ergo sum — 我拯救，故我在</span><span>夜巡手記 · 卷七</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------------- interactive story ---------------- */
+  (function(){
+    var SCENES=[
+      {q:'深夜，對方傳來訊息：<q>今天真的好糟，好像沒有人懂我。</q>你會──',
+        c:[{t:'立刻打電話過去，陪他聊到他睡著為止。',r:1},
+           {t:'回一句「我在，想聊明天找我」，然後讓自己去睡。',r:0}]},
+      {q:'對方工作又出了狀況，開口向你借一筆不小的錢。你會──',
+        c:[{t:'二話不說轉帳，還反過來安慰他別有壓力。',r:1},
+           {t:'願意幫一次，但把話說清楚：這是最後一次。',r:0}]},
+      {q:'你自己也累壞了，很想有人聽你說。對方卻又開始講他的低潮。你會──',
+        c:[{t:'把自己的事吞回去，先把他安撫好。',r:1},
+           {t:'輕輕說：「我今天，也很需要被聽見。」',r:0}]},
+      {q:'朋友問：<q>和他在一起，你快樂嗎？</q>你想了很久。你會回答──',
+        c:[{t:'「至少……他離不開我。」',r:1},
+           {t:'「我不確定。但我想先照顧好自己。」',r:0}]}
+    ];
+    var REVEALS=[
+      {h:'你一直，在當那個白騎士。', p:'每一個選擇，你都把對方接住了——卻沒有人問過，你自己累不累。你以為那是愛；其實那更像一副盔甲：只要對方一直需要你，你就不必面對，自己也會怕、也渴望被抱。這不是你的錯。但你，同樣值得被接住。'},
+      {h:'你在拯救與守住自己之間，來回擺盪。', p:'你有幾次想把自己也算進來，卻總在最後一刻讓步。那個「再撐一下就好」的念頭，正是盔甲最重的地方。試著在對方之前，先接住自己一次——那不會讓你變得比較不善良。'},
+      {h:'你把自己，也放進了愛裡。', p:'你守住了界限——那不是冷漠。你明白，能走得長遠的愛，是兩個人都還站得住，而不是一個人，硬撐著另一個人的全部。這份清醒，很難得。'}
+    ];
+    var card=document.getElementById('storyCard'), prog=document.getElementById('storyProg');
+    var NUM=['一','二','三','四'], MK=['甲','乙','丙'];
+    var idx=0, rescue=0;
+    function esc(s){return s;}
+    function swap(fn){ if(reduce){ fn(); return; } card.classList.add('fade'); setTimeout(function(){ fn(); card.classList.remove('fade'); }, 230); }
+    function renderScene(){
+      prog.textContent='幕 '+NUM[idx]+' / 四';
+      var s=SCENES[idx], h='<p class="scene">'+s.q+'</p><div class="choices">';
+      s.c.forEach(function(c,i){ h+='<button type="button" class="choice" data-r="'+c.r+'"><span class="m">'+MK[i]+'</span><span>'+c.t+'</span></button>'; });
+      h+='</div>';
+      card.innerHTML=h;
+      card.querySelectorAll('.choice').forEach(function(b){ b.addEventListener('click',function(){
+        rescue+=parseInt(b.getAttribute('data-r'),10); idx++;
+        if(idx<SCENES.length) swap(renderScene); else swap(renderReveal);
+      }); });
+    }
+    function renderReveal(){
+      prog.textContent='真相';
+      var r = rescue>=3?REVEALS[0] : (rescue>=1?REVEALS[1] : REVEALS[2]);
+      card.innerHTML='<div class="reveal-r"><div class="k">你選擇後的樣子</div><h3>'+r.h+'</h3><p>'+r.p+'</p>'+
+        '<div class="cnt">在四個選擇裡，你做了 '+rescue+' 個「拯救」的決定。</div>'+
+        '<button type="button" class="lbtn again" id="storyAgain">↺ 再選一次</button></div>';
+      document.getElementById('storyAgain').addEventListener('click',function(){ idx=0;rescue=0; swap(renderScene); });
+    }
+    renderScene();
+  })();
+
+  /* ---------------- interactive rescue loop ---------------- */
+  (function(){
+    var STAGES=[
+      {n:'01',zh:'理想化',en:'idealize',d:'你愛上的不完全是這個人，而是「一個等待被你修好的人」。他的破碎，正好對上你想被需要的渴望。'},
+      {n:'02',zh:'投身拯救',en:'rescue',d:'時間、金錢、情緒全押上去，你成了對方唯一的支柱。被需要的感覺，讓你確信這就是愛。'},
+      {n:'03',zh:'失去平衡',en:'overgive',d:'你的需求開始消失，界限一再退讓。整段關係的重量，都壓在你單邊的肩上。'},
+      {n:'04',zh:'怨懟累積',en:'resent',d:'付出沒換來預期的感激，也沒換來對方的改變。委屈慢慢發酵：我做這麼多，為什麼還是這樣？'},
+      {n:'05',zh:'耗竭崩解',en:'collapse',d:'關係在掏空中結束。你帶著更深的傷離開——然後，去尋找下一個需要被拯救的人。'}
+    ];
+    var ring=document.getElementById('ring'), arm=document.getElementById('arm');
+    var step=0, laps=0, rel=1, timer=null;
+    var nodes=[];
+    // build nodes — positioned purely in CSS via --a (container-query units)
+    STAGES.forEach(function(s,i){
+      var el=document.createElement('div'); el.className='node';
+      el.style.setProperty('--a',(i*72)+'deg');
+      el.innerHTML='<div class="dot"></div><div class="nl">'+s.zh+'</div><div class="nn">'+s.n+'</div>';
+      ring.appendChild(el); nodes.push(el);
+    });
+    function render(){
+      var idx=((step%5)+5)%5, s=STAGES[idx];
+      nodes.forEach(function(el,i){ el.classList.toggle('on',i===idx); });
+      arm.style.setProperty('--arm',(step*72)+'deg');
+      document.getElementById('stgN').textContent=s.n;
+      document.getElementById('stgTitle').innerHTML=s.zh+'<span class="en">'+s.en+'</span>';
+      document.getElementById('stgDesc').textContent=s.d;
+      document.getElementById('relN').textContent=rel;
+      document.getElementById('loopN').textContent=laps;
+    }
+    function next(){ step++; var idx=step%5; if(idx===0){ laps++; rel++; } render(); }
+    function reset(){ stopAuto(); step=0; laps=0; rel=1; render(); }
+    function stopAuto(){ if(timer){ clearInterval(timer); timer=null; document.getElementById('loopAuto').classList.remove('on'); document.getElementById('loopAuto').textContent='自動播放'; } }
+    document.getElementById('loopNext').addEventListener('click',next);
+    document.getElementById('loopReset').addEventListener('click',reset);
+    document.getElementById('loopAuto').addEventListener('click',function(){
+      if(timer){ stopAuto(); }
+      else{ this.classList.add('on'); this.textContent='停止'; next(); timer=setInterval(next, 2200); }
+    });
+    render();
+  })();
+
+  /* ---------------- ledger pairing hover ---------------- */
+  (function(){
+    var rows=document.querySelectorAll('#ledger .r');
+    rows.forEach(function(row){
+      function on(){ var p=row.getAttribute('data-p'); document.querySelectorAll('#ledger .r[data-p="'+p+'"]').forEach(function(r){r.classList.add('hi');}); }
+      function off(){ document.querySelectorAll('#ledger .r.hi').forEach(function(r){r.classList.remove('hi');}); }
+      row.addEventListener('mouseenter',on); row.addEventListener('mouseleave',off);
+      row.addEventListener('focus',on); row.addEventListener('blur',off); row.tabIndex=0;
+    });
+  })();
+
+  /* ---------------- reveal ---------------- */
+  var rv=document.querySelectorAll('.rv');
+  if(reduce||!('IntersectionObserver' in window)){ rv.forEach(function(e){e.classList.add('in');}); }
+  else{ var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} }); },{threshold:.1}); rv.forEach(function(e){io.observe(e);}); }
+})();
+</script>
+</body>
+</html>
